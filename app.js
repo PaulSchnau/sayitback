@@ -1,9 +1,7 @@
 snippets = null;
 randomSnippet = null;
 randomVideo = null;
-randomVideoTranscript = "hello hello baby you called i can't hear a thing";
-ping = new Audio('ping.mp3');
-userTranscript = null;
+
 
 function search(){
 	var query = $("#query").val();
@@ -18,12 +16,16 @@ function search(){
 
 	request.execute(function(response) {
 		console.log('Found youtube videos for: ' + query);
+		
 		console.log(response);
 		snippets = response.items;
 		randomVideo = chooseRandomVideo(snippets);
-
-		// array_of_captions = randomVideo.caption().download;
-		// console.log("this is the array of captions" + array_of_captions);
+		
+		randomVideoId = randomVideo.id.videoId;
+		console.log(randomVideo.snippet);
+		// console.log(randomVideo.snippet.captions.download({
+		// 	id: randomVideoId,
+		// }));
 		
 		player.loadVideoById(randomVideo.id.videoId);
 		$('#message').text('Listen to the lyrics!');
@@ -34,27 +36,20 @@ function chooseRandomVideo(snippets){
 	return snippets[Math.floor(Math.random()*snippets.length)];
 }
 
-recognizer = new webkitSpeechRecognition();
-// recognizer.lang = "en";
-recognizer.interimResults = false;
-recognizer.continuous = false;
+var recognizer = new webkitSpeechRecognition();
+recognizer.lang = "en";
+recognizer.interimResults = true;
+recognizer.continuous = true;
 recognizer.onstart = function(event){
-	console.log('Recognition started');
-};
-recognizer.onend = function(event){
-	console.log('Recognition ended');
+	console.log('Started recognition');
 };
 recognizer.onresult = function(event) {
-	console.log('Result of recognition');
     if (event.results.length > 0) {
         var result = event.results[event.results.length-1];
         if(result.isFinal) {
-        	userTranscript = result[0].transcript;
-            console.log(userTranscript);
-            compareResults(userTranscript, randomVideoTranscript);
+            console.log(result[0].transcript);
         }
     }  
-    $('#userTranscript').text(userTranscript);
 };
 
 function startRecognition(){
