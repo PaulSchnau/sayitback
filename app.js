@@ -6,42 +6,25 @@ ping = new Audio('ping.mp3');
 userTranscript = null;
 score = 0;
 captions = null;
-request = null;
-nextPageToken = null;
 
-function search(searchThisToken){
+function search(){
 	$('#message').text('Searching for videos...');
-
-	if (nextPageToken === ''){
-		request = gapi.client.youtube.search.list({
-			type: 'video',
-			q: query,
-			part: 'snippet',
-			videoCaption: 'closedCaption',
-			videoCategoryId : '10'
-		});
-	} else { 
-		request = gapi.client.youtube.search.list({
-			type: 'video',
-			q: query,
-			part: 'snippet',
-			videoCaption: 'closedCaption',
-			videoCategoryId : '10',
-			nextPageToken: searchThisToken
-		});
-	}
-
-	
 	var query = $("#query").val();
 	console.log('Searching youtube for: ' + query);
-	
+	var request = gapi.client.youtube.search.list({
+		type: 'video',
+		q: query,
+		part: 'snippet',
+		videoCaption: 'closedCaption',
+		videoCategoryId : '10'
+	});
 
 	request.execute(function(response) {
 		console.log('Found youtube videos for: ' + query);
+		
 		console.log(response);
 		snippets = response.items;
 		randomVideo = chooseRandomVideo(snippets);
-		nextPageToken = response.nextPageToken;
 
 		$.ajax({
 		    type: "GET",
@@ -67,7 +50,7 @@ function search(searchThisToken){
 
 				if (totalDuration < 5 || totalDuration*1000 > 10000){
 					console.log('panic');
-					search(nextPageToken);
+					//search();
 				} else {
 					player.loadVideoById(randomVideo.id.videoId);
 					player.seekTo(startTime);
