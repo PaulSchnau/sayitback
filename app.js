@@ -76,8 +76,8 @@ function chooseVideo(snippets){
 
 var recognizer = new webkitSpeechRecognition();
 recognizer.lang = "en";
-recognizer.interimResults = true;
-recognizer.continuous = true;
+recognizer.interimResults = false;
+recognizer.continuous = false;
 recognizer.onstart = function(event){
 	console.log('Recognition started');
 	$("#userLyricsMessage").text('Listening...');
