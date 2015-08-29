@@ -1,7 +1,9 @@
 snippets = null;
 randomSnippet = null;
 randomVideo = null;
-
+randomVideoTranscript = "hello hello baby you called i can't hear a thing";
+ping = new Audio('ping.mp3');
+userTranscript = null;
 
 function search(){
 	var query = $("#query").val();
@@ -31,19 +33,51 @@ function chooseRandomVideo(snippets){
 	return snippets[Math.floor(Math.random()*snippets.length)];
 }
 
-var recognizer = new webkitSpeechRecognition();
-recognizer.lang = "en";
-recognizer.interimResults = true;
-recognizer.continuous = true;
+recognizer = new webkitSpeechRecognition();
+// recognizer.lang = "en";
+recognizer.interimResults = false;
+recognizer.continuous = false;
 recognizer.onstart = function(event){
-	console.log('Started recognition');
+	console.log('Recognition started');
+};
+recognizer.onend = function(event){
+	console.log('Recognition ended');
 };
 recognizer.onresult = function(event) {
+	console.log('Result of recognition');
     if (event.results.length > 0) {
         var result = event.results[event.results.length-1];
         if(result.isFinal) {
-            console.log(result[0].transcript);
+        	userTranscript = result[0].transcript;
+            console.log(userTranscript);
+            compareResults(userTranscript, randomVideoTranscript);
         }
     }  
+    $('#userTranscript').text(userTranscript);
 };
-recognizer.start();
+
+function startRecognition(){
+	ping.play();
+	recognizer.start();
+}
+
+function compareResults(testTranscript, officialTranscript){
+	testTranscriptArray = testTranscript.split(" ");
+	officialTranscriptArray = officialTranscript.split(" ");
+	matches = getMatch(testTranscriptArray, officialTranscriptArray);
+	$('#message').text('How did you do?');
+	$('#officialTranscript').text(randomVideoTranscript);
+	$('matches').text(matches.join(' '));
+}
+
+function getMatch(a, b) {
+    var matches = [];
+    for ( var i = 0; i < a.length; i++ ) {
+        for ( var e = 0; e < b.length; e++ ) {
+            if ( a[i] === b[e] ) matches.push( a[i] );
+        }
+    }
+    return matches;
+}
+
+

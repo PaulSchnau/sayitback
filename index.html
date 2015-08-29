@@ -30,8 +30,16 @@
 		<label>Artist, genre, etc..</label>
 		<input id="query" value="gaga" type="text" placeholder="Artist, genre, etc..">
 		<br>
-
 		<div id="ytplayer"></div>
+		<br>
+		<p id="message">Waiting for yout to start the game...</p>
+		<p id="results">
+			<div id="userTranscript"></div>
+			<br>
+			<div id="officialTranscript"></div>
+			<br>
+			<div id="matches"></div>
+		</p>
 
 <script>
   // Load the IFrame Player API code asynchronously.
@@ -47,11 +55,11 @@
     player = new YT.Player('ytplayer', {
       height: '390',
       width: '640',
-      videoId: 'M7lc1UVf-VE',
+      videoId: 'N_tsgbQt42Q',
       playerVars: {
 	      modestbranding: 0,
 	      controls: 0,
-	      autoplay: 1,
+	      autoplay: 0,
 	      showinfo: 0,
 	      rel: 0,
 	      iv_load_policy: 0,
