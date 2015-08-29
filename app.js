@@ -4,6 +4,7 @@ randomVideo = null;
 randomVideoTranscript = "hello hello baby you called i can't hear a thing";
 ping = new Audio('ping.mp3');
 userTranscript = null;
+score = 0;
 
 function search(){
 	var query = $("#query").val();
@@ -40,9 +41,12 @@ recognizer.interimResults = false;
 recognizer.continuous = false;
 recognizer.onstart = function(event){
 	console.log('Recognition started');
+	$("#userLyricsMessage").text('Listening...');
 };
 recognizer.onend = function(event){
+	$("#userLyricsMessage").text('');
 	console.log('Recognition ended');
+	compareResults(userTranscript, randomVideoTranscript);
 };
 recognizer.onresult = function(event) {
 	console.log('Result of recognition');
@@ -51,7 +55,6 @@ recognizer.onresult = function(event) {
         if(result.isFinal) {
         	userTranscript = result[0].transcript;
             console.log(userTranscript);
-            compareResults(userTranscript, randomVideoTranscript);
         }
     }  
     $('#userTranscript').text(userTranscript);
@@ -67,9 +70,21 @@ function compareResults(testTranscript, officialTranscript){
 	testTranscriptArray = testTranscript.split(" ");
 	officialTranscriptArray = officialTranscript.split(" ");
 	matches = getMatch(testTranscriptArray, officialTranscriptArray);
-	$('#message').text('How did you do?');
+	var score = matches.length / officialTranscriptArray.length * 100;
+	$('#message').text('Score: ' + score.toFixed(2).toString());
 	$('#officialTranscript').text(randomVideoTranscript);
-	$('#matches').text(matches.join(' '));
+	stuffToHighlight = document.getElementById('officialTranscript');
+	for (var i=0; i < matches.length; i++){
+		hiliter(matches[i], stuffToHighlight);
+	}
+	$('#officialTranscript');
+	// $('#matches').text(matches.join(' '));
+}
+
+function hiliter(word, element) {
+    var rgxp = new RegExp(word, 'g');
+    var repl = '<span class="highlight">' + word + '</span>';
+    element.innerHTML = element.innerHTML.replace(rgxp, repl);
 }
 
 function getMatch(a, b) {
