@@ -40,7 +40,7 @@ function search(){
 				$(xml).find('text').each(function(){
 					j++;
 					if (j > 5 && totalDuration < 5){
-						randomVideoTranscript += ($(this).html().text() + ' ').replace(/(\r\n|\n|\r)/gm,"");
+						randomVideoTranscript += ($.parseHTML($(this).text())[0].textContent  + ' ').replace(/(\r\n|\n|\r)/gm,"");
 						if (startTime === null){
 							startTime = parseFloat($(this).attr('start'));
 						}
