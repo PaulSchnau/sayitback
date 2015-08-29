@@ -135,8 +135,11 @@ function getMatch(a, b) {
     return matches;
 }
 
-function getCaptons(videoId){
-
-}
+$(document).ready(function(){
+    $('#query').keypress(function(e){
+      if(e.keyCode==13)
+      $('#nextSong').click();
+    });
+});
 
 
