@@ -6,6 +6,7 @@ ping = new Audio('ping.mp3');
 userTranscript = null;
 score = 0;
 captions = null;
+recognizer = null;
 
 function search(){
 
@@ -40,7 +41,7 @@ function getSong(){
 				console.log(xml);
 				randomVideoTranscript = '';
 				startTime = null;
-				totalDuration = 0;
+				totalDuration = 3;
 				var j = 0;
 
 				$(xml).find('text').each(function(){
@@ -81,32 +82,35 @@ function chooseVideo(snippets){
 	return snippet;
 }
 
-var recognizer = new webkitSpeechRecognition();
-recognizer.lang = "en";
-recognizer.interimResults = false;
-recognizer.continuous = false;
-recognizer.onstart = function(event){
-	console.log('Recognition started');
-	$("#userLyricsMessage").text('Listening...');
-};
-recognizer.onend = function(event){
-	$("#userLyricsMessage").text('');
-	console.log('Recognition ended');
-	compareResults(userTranscript, randomVideoTranscript);
-};
-recognizer.onresult = function(event) {
-    if (event.results.length > 0) {
-        var result = event.results[event.results.length-1];
-        if(result.isFinal) {
-        	userTranscript = result[0].transcript;
-            console.log(userTranscript);
-            recognizer.stop();
-        }
-    }  
-};
 
 function startRecognition(){
 	ping.play();
+	recognizer = new webkitSpeechRecognition();
+	recognizer.lang = "en";
+	recognizer.interimResults = false;
+	recognizer.continuous = false;
+	recognizer.onstart = function(event){
+		console.log('Recognition started');
+		$("#userLyricsMessage").text('Listening...');
+		setTimeout(function(){
+			recognizer.stop();
+		}, (totalDuration + 10)*1000);
+	};
+	recognizer.onend = function(event){
+		$("#userLyricsMessage").text('');
+		console.log('Recognition ended');
+		compareResults(userTranscript, randomVideoTranscript);
+	};
+	recognizer.onresult = function(event) {
+	    if (event.results.length > 0) {
+	        var result = event.results[event.results.length-1];
+	        if(result.isFinal) {
+	        	userTranscript = result[0].transcript;
+	            console.log(userTranscript);
+	            recognizer.stop();
+	        }
+	    }  
+	};
 	recognizer.start();
 	$('#message').text('Say back the lyrics!');
 }
