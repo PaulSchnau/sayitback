@@ -8,6 +8,7 @@ score = 0;
 captions = null;
 
 function search(){
+	$('#message').text('Searching for videos...');
 	var query = $("#query").val();
 	console.log('Searching youtube for: ' + query);
 	var request = gapi.client.youtube.search.list({
@@ -24,6 +25,17 @@ function search(){
 		console.log(response);
 		snippets = response.items;
 		randomVideo = chooseRandomVideo(snippets);
+
+		$.ajax({
+		    type: "GET",
+			url: 'https://video.google.com/timedtext?lang=en&v=' + randomVideo.id.videoId,
+			dataType: "xml",
+			success: function(xml) {
+				console.log(xml);
+				player.loadVideoById(randomVideo.id.videoId);
+				$('#message').text('Listen to the lyrics!');
+			}
+		});
 		
 		$.get('https://video.google.com/timedtext?lang=en&v=' + randomVideo.id.videoId, function(data){
 			captions = $.parseXML(data);
@@ -31,8 +43,7 @@ function search(){
 
 
 			// If captions, load video. Else, search again.
-			player.loadVideoById(randomVideo.id.videoId);
-			$('#message').text('Listen to the lyrics!');
+			
 		});
 	});
 }
