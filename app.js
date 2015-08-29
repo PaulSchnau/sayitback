@@ -5,6 +5,7 @@ randomVideoTranscript = "hello hello baby you called i can't hear a thing";
 ping = new Audio('ping.mp3');
 userTranscript = null;
 score = 0;
+captions = null;
 
 function search(){
 	var query = $("#query").val();
@@ -24,12 +25,10 @@ function search(){
 		snippets = response.items;
 		randomVideo = chooseRandomVideo(snippets);
 		
-		randomVideoId = randomVideo.id.videoId;
-		console.log(randomVideo.snippet);
-		// console.log(randomVideo.snippet.captions.download({
-		// 	id: randomVideoId,
-		// }));
-		
+		$.get('https://video.google.com/timedtext?v=' + randomVideo.id.videoId, function(data){
+			captions = $.parseXML(data);
+			console.log(captions);
+		});
 		player.loadVideoById(randomVideo.id.videoId);
 		$('#message').text('Listen to the lyrics!');
 	});
@@ -97,6 +96,10 @@ function getMatch(a, b) {
         }
     }
     return matches;
+}
+
+function getCaptons(videoId){
+
 }
 
 
