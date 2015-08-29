@@ -28,9 +28,13 @@ function search(){
 		$.get('https://video.google.com/timedtext?v=' + randomVideo.id.videoId, function(data){
 			captions = $.parseXML(data);
 			console.log(captions);
+
+
+			// If captions, load video. Else, search again.
+			player.loadVideoById(randomVideo.id.videoId);
+			$('#message').text('Listen to the lyrics!');
 		});
-		player.loadVideoById(randomVideo.id.videoId);
-		$('#message').text('Listen to the lyrics!');
+		
 	});
 }
 
