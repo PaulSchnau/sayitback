@@ -7,9 +7,12 @@ userTranscript = null;
 score = 0;
 captions = null;
 recognizer = null;
+timeout = null;
 
 function search(){
-
+	if (timeout != null){
+		clearTimeout(timeout);
+	};
 	$('#message').text('Searching for videos...');
 	var query = $("#query").val();
 	console.log('Searching youtube for: ' + query);
@@ -62,7 +65,7 @@ function getSong(){
 				} else {
 					player.loadVideoById(randomVideo.id.videoId);
 					player.seekTo(startTime);
-					setTimeout(function(){
+					timeout = setTimeout(function(){
 						player.pauseVideo();
 						startRecognition();
 					}, totalDuration*1000);
@@ -93,7 +96,10 @@ function startRecognition(){
 	recognizer.onstart = function(event){
 		console.log('Recognition started');
 		$("#userLyricsMessage").text('Listening...');
-		setTimeout(function(){
+		if (timeout != null){
+			clearTimeout(timeout);
+		};
+		timeout = setTimeout(function(){
 			recognizer.stop();
 		}, (totalDuration + 10)*1000);
 	};
