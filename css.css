@@ -1,3 +1,44 @@
+h1, h2 {
+	font-family: 'Slabo 27px', serif;
+	font-size: 42px;
+}
+
+h1.title { 
+	text-transform: uppercase;
+	text-align: center;
+	letter-spacing: 9px;
+}
+
+p, label, input { 
+	font-family: 'Lato', sans-serif;
+	font-weight: 300;
+	margin: 0px;
+}
+
+.main_containers {
+	margin: auto;
+	text-align: center;
+}
+
+input { 
+	padding: 10px 16px;
+	text-align: center;
+	margin: 0px 22px;
+	width: 250px;
+}
+
+button {
+	background-color: black;
+	color: white;
+	border: none;
+	padding: 12px 31px;
+}
+
+.search_container { 
+	margin: 30px auto;
+	text-align: center;
+}
+
 .youtube-container {
     position: relative;
     width: 100%;
