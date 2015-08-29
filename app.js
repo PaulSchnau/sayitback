@@ -8,6 +8,7 @@ score = 0;
 captions = null;
 
 function search(){
+
 	$('#message').text('Searching for videos...');
 	var query = $("#query").val();
 	console.log('Searching youtube for: ' + query);
@@ -21,12 +22,16 @@ function search(){
 	});
 
 	request.execute(function(response) {
-		console.log('Found youtube videos for: ' + query);
-		
-		console.log(response);
 		snippets = response.items;
-		randomVideo = chooseRandomVideo(snippets);
+		getSong();
+	});
+}
 
+function getSong(){
+		
+		console.log('Found youtube videos for: ' + query);
+		console.log(snippets);
+		randomVideo = chooseVideo(snippets);
 		$.ajax({
 		    type: "GET",
 			url: 'https://video.google.com/timedtext?lang=en&v=' + randomVideo.id.videoId,
@@ -51,7 +56,7 @@ function search(){
 
 				if (totalDuration < 5 || totalDuration*1000 > 10000){
 					console.log('panic');
-					//search();
+					getSong();
 				} else {
 					player.loadVideoById(randomVideo.id.videoId);
 					player.seekTo(startTime);
@@ -63,11 +68,10 @@ function search(){
 				}
 			}
 		});
-	});
 }
 
-function chooseRandomVideo(snippets){
-	return snippets[Math.floor(Math.random()*snippets.length)];
+function chooseVideo(snippets){
+	return snippets.pop();
 }
 
 var recognizer = new webkitSpeechRecognition();
