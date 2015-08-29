@@ -25,7 +25,7 @@ function search(){
 		snippets = response.items;
 		randomVideo = chooseRandomVideo(snippets);
 		
-		$.get('https://video.google.com/timedtext?v=' + randomVideo.id.videoId, function(data){
+		$.get('https://video.google.com/timedtext?lang=en&v=' + randomVideo.id.videoId, function(data){
 			captions = $.parseXML(data);
 			console.log(captions);
 
@@ -34,7 +34,6 @@ function search(){
 			player.loadVideoById(randomVideo.id.videoId);
 			$('#message').text('Listen to the lyrics!');
 		});
-		
 	});
 }
 
