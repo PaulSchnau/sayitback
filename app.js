@@ -1,7 +1,10 @@
 snippets = null;
 randomSnippet = null;
 randomVideo = null;
-
+randomVideoTranscript = "hello hello baby you called i can't hear a thing";
+ping = new Audio('ping.mp3');
+userTranscript = null;
+score = 0;
 
 function search(){
 	var query = $("#query").val();
@@ -41,13 +44,20 @@ recognizer.lang = "en";
 recognizer.interimResults = true;
 recognizer.continuous = true;
 recognizer.onstart = function(event){
-	console.log('Started recognition');
+	console.log('Recognition started');
+	$("#userLyricsMessage").text('Listening...');
+};
+recognizer.onend = function(event){
+	$("#userLyricsMessage").text('');
+	console.log('Recognition ended');
+	compareResults(userTranscript, randomVideoTranscript);
 };
 recognizer.onresult = function(event) {
     if (event.results.length > 0) {
         var result = event.results[event.results.length-1];
         if(result.isFinal) {
-            console.log(result[0].transcript);
+        	userTranscript = result[0].transcript;
+            console.log(userTranscript);
         }
     }  
 };
@@ -62,9 +72,21 @@ function compareResults(testTranscript, officialTranscript){
 	testTranscriptArray = testTranscript.split(" ");
 	officialTranscriptArray = officialTranscript.split(" ");
 	matches = getMatch(testTranscriptArray, officialTranscriptArray);
-	$('#message').text('How did you do?');
+	var score = matches.length / officialTranscriptArray.length * 100;
+	$('#message').text('Score: ' + score.toFixed(2).toString());
 	$('#officialTranscript').text(randomVideoTranscript);
-	$('#matches').text(matches.join(' '));
+	stuffToHighlight = document.getElementById('officialTranscript');
+	for (var i=0; i < matches.length; i++){
+		hiliter(matches[i], stuffToHighlight);
+	}
+	$('#officialTranscript');
+	// $('#matches').text(matches.join(' '));
+}
+
+function hiliter(word, element) {
+    var rgxp = new RegExp(word, 'g');
+    var repl = '<span class="highlight">' + word + '</span>';
+    element.innerHTML = element.innerHTML.replace(rgxp, repl);
 }
 
 function getMatch(a, b) {

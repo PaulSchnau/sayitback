@@ -43,11 +43,11 @@
 			<div class="col-md-6">
 				<h2 id="message">Start the Game!</h2>
 				<p id="results">
-					<div id="userTranscript"></div>
+					<h4 id="userLyricsMessage"></h3>
+					<h5 id="userTranscript"></div>
 					<br>
-					<div id="officialTranscript"></div>
-					<br>
-					<div id="matches"></div>
+					<h4 id="officalLyricsMessage"></h4>
+					<h5 id="officialTranscript"></div>
 				</p>
 			</div>
 		</div>
@@ -79,9 +79,10 @@
 	      autoplay: 0,
 	      showinfo: 0,
 	      rel: 0,
-	      iv_load_policy: 0,
+	      iv_load_policy: 3,
 	      cc_load_policy: 0,
-	      enablejsapi: 1
+	      enablejsapi: 1,
+	      cc: 0
   	  }
     });
   }
