@@ -57,6 +57,7 @@ function getSong(){
 
 				if (totalDuration < 5 || totalDuration*1000 > 10000){
 					console.log('panic');
+					$('#message').append('.');
 					getSong();
 				} else {
 					player.loadVideoById(randomVideo.id.videoId);
