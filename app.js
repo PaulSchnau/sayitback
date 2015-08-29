@@ -70,8 +70,15 @@ function getSong(){
 		});
 }
 
+counter = 0;
 function chooseVideo(snippets){
-	return snippets.pop();
+	counter ++;
+	if (counter > snippets.length){
+		counter = 0;
+	}
+	var snippet = snippets[counter];
+	delete snippets[counter];
+	return snippet;
 }
 
 var recognizer = new webkitSpeechRecognition();
