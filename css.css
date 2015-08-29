@@ -17,6 +17,17 @@ p, label, input {
 	text-align: center;
 }
 
+p.user-text {
+	font-size: 25px;
+	margin: 10px 0px;
+} 
+
+p.lyrics-text { 
+	font-size: 25px;
+	margin: 10px 0px;
+	font-weight: 900;
+}
+
 a.auth { 
 	text-decoration: underline;
 	color: #88FAE0;
