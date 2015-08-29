@@ -15,6 +15,21 @@ p, label, input {
 	margin: 0px;
 }
 
+a.auth { 
+	text-decoration: underline;
+	color: #88FAE0;
+	font-weight: 900;
+	text-transform: uppercase;
+}
+
+.authorize { 
+	margin: auto;
+	background-color: black;
+	color: white;
+	text-align: center;
+	padding: 15px 0px;
+}
+
 .main_containers {
 	margin: auto;
 	text-align: center;
