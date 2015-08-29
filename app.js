@@ -32,18 +32,35 @@ function search(){
 			dataType: "xml",
 			success: function(xml) {
 				console.log(xml);
-				player.loadVideoById(randomVideo.id.videoId);
+				randomVideoTranscript = '';
+				startTime = null;
+				totalDuration = 0;
+				var j = 0;
+
+				$(xml).find('text').each(function(){
+					j++;
+					if (j > 5 && totalDuration < 5){
+						randomVideoTranscript += ($(this).html().text() + ' ').replace(/(\r\n|\n|\r)/gm,"");
+						if (startTime === null){
+							startTime = parseFloat($(this).attr('start'));
+						}
+						totalDuration += parseFloat($(this).attr('dur'));
+					}
+				});
+
+				if (totalDuration < 5 || totalDuration*1000 > 10000){
+					console.log('panic');
+					//search();
+				} else {
+					player.loadVideoById(randomVideo.id.videoId);
+					player.seekTo(startTime);
+					setTimeout(function(){
+						player.pauseVideo();
+						startRecognition();
+					}, totalDuration*1000);
 				$('#message').text('Listen to the lyrics!');
+				}
 			}
-		});
-		
-		$.get('https://video.google.com/timedtext?lang=en&v=' + randomVideo.id.videoId, function(data){
-			captions = $.parseXML(data);
-			console.log(captions);
-
-
-			// If captions, load video. Else, search again.
-			
 		});
 	});
 }
@@ -71,6 +88,7 @@ recognizer.onresult = function(event) {
         if(result.isFinal) {
         	userTranscript = result[0].transcript;
             console.log(userTranscript);
+            recognizer.stop();
         }
     }  
 };
