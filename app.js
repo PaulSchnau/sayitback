@@ -14,6 +14,9 @@ function search(){
 		clearTimeout(timeout);
 	};
 	$('#message').text('Searching for videos...');
+	$('#userTranscript').text('');
+	$('#officialTranscript').text('');
+	stuffToHighlight = document.getElementById('officialTranscript');
 	var query = $("#query").val();
 	console.log('Searching youtube for: ' + query);
 	var request = gapi.client.youtube.search.list({
@@ -128,12 +131,12 @@ function compareResults(testTranscript, officialTranscript){
 	matches = getMatch(testTranscriptArray, officialTranscriptArray);
 	var score = matches.length / officialTranscriptArray.length * 100;
 	$('#message').text('Score: ' + score.toFixed(2).toString());
+	$('#userTranscript').text(userTranscript);
 	$('#officialTranscript').text(randomVideoTranscript);
 	stuffToHighlight = document.getElementById('officialTranscript');
 	for (var i=0; i < matches.length; i++){
 		hiliter(matches[i], stuffToHighlight);
 	}
-	$('#officialTranscript');
 	// $('#matches').text(matches.join(' '));
 }
 
