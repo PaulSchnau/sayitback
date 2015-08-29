@@ -6,14 +6,13 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
 	<link href="css.css" rel="stylesheet">
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-route.min.js"></script>
 	<script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
-	<script src="https://cdn.firebase.com/libs/angularfire/1.1.2/angularfire.min.js"></script>
 	<script src="auth.js"></script>
     <script src="search.js"></script>
-	<script src="app.js"></script>
 	<script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
+	<script src="https://www.youtube.com/iframe_api"></script>
+	<scirpt src="angular-youtube-embed.min.js"></scirpt>
+	<script src="app.js"></script>
 </head>
 
 <body ng-controller="gameController">
@@ -27,13 +26,13 @@
 		<div class="page-header">
 	    	<h1>Say It Back</h1>
 	    </div>
-		<button ng-click="start()" class="btn btn-primary btn-lg">Start Listening!</button>
+		<button onclick="search()" class="btn btn-primary btn-lg">Start Listening!</button>
 		<label>Artist, genre, etc..</label>
-		<input id="query" value="gaga" type="text" ng-model="query">
+		<input id="query" value="gaga" type="text" placeholder="Artist, genre, etc..">
 		<br>
 
-
 		<div id="ytplayer"></div>
+
 <script>
   // Load the IFrame Player API code asynchronously.
   var tag = document.createElement('script');
