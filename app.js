@@ -16,7 +16,8 @@ function search(){
 		q: query,
 		part: 'snippet',
 		videoCaption: 'closedCaption',
-		videoCategoryId : '10'
+		videoCategoryId : '10',
+		maxResults: 50
 	});
 
 	request.execute(function(response) {
