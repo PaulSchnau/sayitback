@@ -19,6 +19,10 @@ function search(){
 		console.log(response);
 		snippets = response.items;
 		randomVideo = chooseRandomVideo(snippets);
+
+		// array_of_captions = randomVideo.caption().download;
+		// console.log("this is the array of captions" + array_of_captions);
+		
 		player.loadVideoById(randomVideo.id.videoId);
 	});
 }
