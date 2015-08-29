@@ -1,7 +1,13 @@
-.paging-button {
-  visibility: hidden;
+.youtube-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 60%;
 }
-
-.button-container {
-  clear: both;
+.video-frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }

@@ -22,24 +22,41 @@
       Please <a href="#" id="login-link">authorize</a> to continue.
     </div>
 
-	<div class="container">
+	<div class="container-fluid">
 		<div class="page-header">
 	    	<h1>Say It Back</h1>
 	    </div>
-		<button onclick="search()" class="btn btn-primary btn-lg">Start Listening!</button>
-		<label>Artist, genre, etc..</label>
-		<input id="query" value="gaga" type="text" placeholder="Artist, genre, etc..">
+	    <div class="row">
+	    	<div class="col-md-12">
+				<button onclick="search()" class="btn btn-primary btn-lg">Next Song »</button>
+				<label>Artist, genre, etc..</label>
+				<input id="query" value="gaga" type="text" placeholder="Artist, genre, etc..">
+			</div>
+		</div>
 		<br>
-		<div id="ytplayer"></div>
-		<br>
-		<p id="message">Waiting for yout to start the game...</p>
-		<p id="results">
-			<div id="userTranscript"></div>
-			<br>
-			<div id="officialTranscript"></div>
-			<br>
-			<div id="matches"></div>
-		</p>
+		<div class="row">
+	    	<div class="col-md-6">
+				<div class="youtube-container">
+					<div id="ytplayer" class="video-frame"></div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<h2 id="message">Start the Game!</h2>
+				<p id="results">
+					<div id="userTranscript"></div>
+					<br>
+					<div id="officialTranscript"></div>
+					<br>
+					<div id="matches"></div>
+				</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<h3>Rules</h3>
+				<p>Listen to the video, say back the words!</p>
+			</div>
+		</div>
 
 <script>
   // Load the IFrame Player API code asynchronously.

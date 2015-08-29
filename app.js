@@ -26,6 +26,7 @@ function search(){
 		// console.log("this is the array of captions" + array_of_captions);
 		
 		player.loadVideoById(randomVideo.id.videoId);
+		$('#message').text('Listen to the lyrics!');
 	});
 }
 
@@ -59,6 +60,7 @@ recognizer.onresult = function(event) {
 function startRecognition(){
 	ping.play();
 	recognizer.start();
+	$('#message').text('Say back the lyrics!');
 }
 
 function compareResults(testTranscript, officialTranscript){
@@ -67,7 +69,7 @@ function compareResults(testTranscript, officialTranscript){
 	matches = getMatch(testTranscriptArray, officialTranscriptArray);
 	$('#message').text('How did you do?');
 	$('#officialTranscript').text(randomVideoTranscript);
-	$('matches').text(matches.join(' '));
+	$('#matches').text(matches.join(' '));
 }
 
 function getMatch(a, b) {
