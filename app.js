@@ -47,7 +47,7 @@ function getSong(){
 				console.log(xml);
 				randomVideoTranscript = '';
 				startTime = null;
-				totalDuration = 3;
+				totalDuration = 0;
 				var j = 0;
 
 				$(xml).find('text').each(function(){
@@ -71,7 +71,7 @@ function getSong(){
 					timeout = setTimeout(function(){
 						player.pauseVideo();
 						startRecognition();
-					}, totalDuration*1000);
+					}, (totalDuration*1000)+3000);
 				$('#message').text('Listen to the lyrics!');
 				}
 			}
