@@ -126,7 +126,12 @@ function startRecognition(){
 }
 
 function compareResults(testTranscript, officialTranscript){
-	testTranscriptArray = testTranscript.split(" ");
+	if (typeof(testTranscript) != undefined && testTranscript != null && testTranscript != ""){
+		testTranscriptArray = testTranscript.split(" ");
+	} else{
+		testTranscriptArray = [""];
+		userTranscript = "PLEASE SPEAK LOUDER! <3 <3 <3";
+	};
 	officialTranscriptArray = officialTranscript.split(" ");
 	matches = getMatch(testTranscriptArray, officialTranscriptArray);
 	var score = matches.length / officialTranscriptArray.length * 100;
