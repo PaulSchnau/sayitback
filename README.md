@@ -1,6 +1,8 @@
 # sayitback
 Spotify Hackathon Auguts 2015
 
+# Here's the [link](sayitback.firebaseapp.com)!
+
 ## Installation
 1. Install firebase to run it
 ```
